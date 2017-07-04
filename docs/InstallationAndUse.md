@@ -7,7 +7,7 @@ This section will present how to install and use our custom Homestead developmen
 
 * [Setup](#setup)
   * [Mount Your Codebase in the Virtual Machine](#setup--mount-the-codebase)
-  * [Using Homestead From Any Folder](#setup--using-homestead-from-anywhere)
+  * [Using Homestead from Any Folder](#setup--using-homestead-from-anywhere)
   * [Prepare Configuration](#setup--prepare-configuration)
 
 * [Starting a New Project](#starting-a-new-project)
@@ -15,8 +15,8 @@ This section will present how to install and use our custom Homestead developmen
   * [Map the Site in Your Hosts](#starting-a-new-project--map-the-site-in-hosts)
 
 * [Running the Development Environment](#running-the-development-environment)
-  * [Provisioning it](#running-the-development-environment--provisioning-the-development-environment)
-  * [Running it on a Day to Day Basis](#running-the-development-environment--running-the-development-environment-day-to-day)
+  * [Provisioning It](#running-the-development-environment--provisioning-the-development-environment)
+  * [Running It on a Day to Day Basis](#running-the-development-environment--running-the-development-environment-day-to-day)
 
 ***
 
@@ -67,7 +67,7 @@ source ~/.bashrc     # or ~/.zshrc
 ```
 
 <a id="setup--using-homestead-from-anywhere"></a>
-## Using Homestead From Any Folder
+## Using Homestead from Any Folder
 
 Add the following script to your bash profile (or any other one you're using). For instance:
 
@@ -136,7 +136,7 @@ Now your project is accessible from your host on the following URL: http://my-gr
 # Running the Development Environment
 
 <a id="running-the-development-environment--provisioning-the-development-environment"></a>
-## Provisioning it 
+## Provisioning It 
 
 To re-provision the Virtual Machine (whenever a configuration file changed or a file needs to be re-provisioned in the VM),
 just run the following command from the folder where you cloned this repository:
@@ -146,7 +146,7 @@ just run the following command from the folder where you cloned this repository:
 ```
 
 <a id="running-the-development-environment--running-the-development-environment-day-to-day"></a>
-## Running it on a Day to Day Basis
+## Running It on a Day to Day Basis
 
 If no provisioning if needed, just run the following command from anywhere:
 

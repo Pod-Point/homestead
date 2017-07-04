@@ -5,7 +5,7 @@ This section will present general knowledge and tools to have before diving into
 
 **Table of Content**
 
-* [What is it?](#what-is-it)
+* [What is It?](#what-is-it)
 
 * [Guest Vs Host](#guest-vs-host)
 
@@ -15,7 +15,7 @@ This section will present general knowledge and tools to have before diving into
     * [Install PHP 7.1](#needed-tools--php-version--install-php71)
     * [Check](#needed-tools--php-version--check)
 
-* [How Does it Work?](#how-does-it-work)
+* [How Does It Work?](#how-does-it-work)
 
   * [Provisioning](#provisioning)
   
@@ -24,7 +24,7 @@ This section will present general knowledge and tools to have before diving into
 ***
 
 <a id="what-is-it"></a>
-# What is it?
+# What is It?
 
 The official documentation says:
 > Laravel Homestead is an official, pre-packaged Vagrant box that provides you a wonderful development environment without requiring you to install PHP, a web server, and any other server software on your local machine. No more worrying about messing up your operating system! Vagrant boxes are completely disposable. If something goes wrong, you can destroy and re-create the box in minutes!
@@ -91,7 +91,7 @@ brew install php71
 The output of `php -v` should now echo the version 7.
 
 <a id="how-does-it-work"></a>
-# How Does it Work?
+# How Does It Work?
 
 <a id="provisioning"></a>
 ## Provisioning
