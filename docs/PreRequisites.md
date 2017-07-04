@@ -10,6 +10,10 @@ This section will present general knowledge and tools to have before diving into
 * [Guest Vs Host](#guest-vs-host)
 
 * [Needed Tools](#needed-tools)
+  * [PHP Version](#needed-tools--php-version)
+    * [Install Homebrew](#needed-tools--php-version--install-homebrew)
+    * [Install PHP 7.1](#needed-tools--php-version--install-php71)
+    * [Check](#needed-tools--php-version--check)
 
 * [How Does it Work?](#how-does-it-work)
 
@@ -43,7 +47,48 @@ In order to run Homestead, you will need to have the following installed on your
 
 * Vagrant: [https://www.vagrantup.com/downloads.html](https://www.vagrantup.com/downloads.html)
 
+* Have PHP7+ installed on your machine
+
 * Some coffee ;)
+
+<a id="needed-tools--php-version"></a>
+## Upgrading PHP Version
+Some of our needed dependencies will need PHP7+, so make sure you have PHP7 installed on your machine.
+
+```bash
+php -v
+```
+
+Sample output:
+```text
+PHP 7.1.5 (cli) (built: May 13 2017 13:30:32) ( NTS )
+Copyright (c) 1997-2017 The PHP Group
+Zend Engine v3.1.0, Copyright (c) 1998-2017 Zend Technologies
+```
+
+If you don't have it, simply upgrade your version as described below.
+
+<a id="needed-tools--php-version--install-homebrew"></a>
+### Install Homebrew
+```bash
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+<a id="needed-tools--php-version--install-php7"></a>
+### Install PHP 7.1
+```bash
+brew update && brew upgrade
+brew tap homebrew/dupes
+brew tap homebrew/versions
+brew tap homebrew/homebrew-php
+brew unlink php56
+brew install php71
+```
+
+<a id="needed-tools--php-version--check"></a>
+### Check
+
+The output of `php -v` should now echo the version 7.
 
 <a id="how-does-it-work"></a>
 # How Does it Work?

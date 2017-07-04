@@ -39,19 +39,6 @@ composer install
 We suggest you to put all of your cloned repositories in a main folder somewhere such as: `/path/to/my/main-repositories-folder`
 This way it will be easier to share all your projects with the virtual machine.
 
-<a id="setup--mount-the-codebase"></a>
-## Mount Your Codebase in the Virtual Machine
-
-Using a main folder for all your POD Point repositories allows you to map all your projects in one go by updating `resources/Homestead.yaml` file, changing `folders.map` to your folder hosting your code:
-```yaml
-folders:
-    - map: /path/to/my/main-repositories-folder
-      to: /home/vagrant/code
-      type: "nfs"
-```
-
-> ***NOTE: Please put absolute path there.***
-
 <a id="setup--prepare-configuration"></a>
 ## Prepare Configuration
 
@@ -68,12 +55,15 @@ export HOMESTEAD_WORKING_DIR=/path/to/my/main-repositories-folder
 export HOMESTEAD_VENDOR_DIR=/path/to/Homestead/folder/vendor
 ```
 
-> NOTE: `/path/to/Homestead/folder` is the folder where you host all of your source code & `/path/to/homestead-folder` is the folder where you cloned this repository.
+> ***NOTE: Please put absolute path there.***
+
+> *`/path/to/my/main-repositories-folder` is the folder where you host all of your source code
+`/path/to/homestead-folder` is the folder where you cloned this repository.*
 
 After that, remember to `source` the profile file in order to make it available:
 
 ```bash
-source ~/.bashrc
+source ~/.bashrc     # or ~/.zshrc
 ```
 
 <a id="setup--using-homestead-from-anywhere"></a>
@@ -96,7 +86,7 @@ function homestead() {
 After that, remember to `source` the profile file in order to make it available:
 
 ```bash
-source ~/.bashrc
+source ~/.bashrc     # or ~/.zshrc
 ```
 
 Now you can run any vagrant command from any path! For instance: `homestead up` will start the vagrant box.
