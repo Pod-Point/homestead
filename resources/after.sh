@@ -95,15 +95,12 @@ cp /home/vagrant/config/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
 displaySpacedMessage "Copying PHP Configurations"
 cp --force /home/vagrant/config/php.ini /etc/php/7.0/cli/php.ini
 cp --force /home/vagrant/config/php.ini /etc/php/7.1/cli/php.ini
-cp --force /home/vagrant/config/php.ini /etc/php/7.2/cli/php.ini
 
 displaySpacedMessage "Copying PHP Configurations for Craft CMS"
 cp --force /home/vagrant/config/craftConfig.ini /etc/php/7.0/mods-available/craftConfig.ini
 cp --force /home/vagrant/config/craftConfig.ini /etc/php/7.1/mods-available/craftConfig.ini
-cp --force /home/vagrant/config/craftConfig.ini /etc/php/7.2/mods-available/craftConfig.ini
 rm /etc/php/7.0/fpm/conf.d/100-craftConfig.ini && ln -s /etc/php/7.0/mods-available/craftConfig.ini /etc/php/7.0/fpm/conf.d/100-craftConfig.ini
 rm /etc/php/7.1/fpm/conf.d/100-craftConfig.ini && ln -s /etc/php/7.1/mods-available/craftConfig.ini /etc/php/7.1/fpm/conf.d/100-craftConfig.ini
-rm /etc/php/7.2/fpm/conf.d/100-craftConfig.ini && ln -s /etc/php/7.2/mods-available/craftConfig.ini /etc/php/7.2/fpm/conf.d/100-craftConfig.ini
 
 displayOkMessage
 
@@ -123,7 +120,6 @@ displayTitle "Restarting php-fpm"
 
 /etc/init.d/php7.0-fpm restart
 /etc/init.d/php7.1-fpm restart
-/etc/init.d/php7.2-fpm restart
 
 displayOkMessage
 
