@@ -3,7 +3,7 @@ ip: "192.168.10.10"
 memory: 4096
 cpus: 2
 provider: virtualbox
-elasticsearch: true
+elasticsearch: 6
 
 authorize: ~/.ssh/id_rsa.pub
 
@@ -25,50 +25,79 @@ sites:
     # API 3
     - map: api3.test
       to: /home/vagrant/code/api3/public
+      php: "7.1"
+
     # Auth Service
     - map: auth-service.test
       to: /home/vagrant/code/auth-service/public
+      php: "7.1"
+
     # Contractors Tool
     - map: contractors-tool.test
       to: /home/vagrant/code/contractors-tool/public
+      php: "7.1"
+
     # Dashboard API
     - map: dashboard-api.test
       to: /home/vagrant/code/dashboard-api/public
+      php: "7.1"
+
     # Dealerships Tool
     - map: dealerships-tool.test
       to: /home/vagrant/code/dealerships-tool/public
+      php: "7.1"
+
     # Installs Reporting
     - map: installs-reporting.test
       to: /home/vagrant/code/installs-reporting/public
+      php: "7.1"
+
     # Install tools - Ordering tools
     - map: installs-tool.test
       to: /home/vagrant/code/installs-tool/public
+      php: "7.1"
+
     # Install tools - Renault
     - map: installs-tool-renault.test
       to: /home/vagrant/code/renault/public
+      php: "7.1"
+
     # MIS
     - map: admin-tool.test
       to: /home/vagrant/code/admin-tool/public
+      php: "7.1"
+
     # OCPP Service
     - map: ocpp-service.test
       to: /home/vagrant/code/ocpp-service/public
+      php: "7.1"
+
     # Pod Comms Service
     - map: pod-comms-service.test
       to: /home/vagrant/code/pod-comms-service/public
+      php: "7.1"
+
     # POD Point - Web
     - map: pod-point.test
       to: /home/vagrant/code/pod-point.com/public
+      php: "7.1"
+
     # POD Point - Web Craft CMS
     - map: craft.test
       to: /home/vagrant/code/pod-point.com/public
+      php: "7.1"
+
     # Open Charge Web App
     - map: opencharge-web-app.test
       to: /home/vagrant/code/opencharge-web-app/public
+      php: "7.1"
 
 ports:
     - send: 9200
       to: 9200
 
+databases:
+    - homestead
 
 # blackfire:
 #     - id: foo

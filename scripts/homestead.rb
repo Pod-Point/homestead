@@ -12,7 +12,7 @@ class Homestead
         # Configure The Box
         config.vm.define settings["name"] ||= "homestead-7"
         config.vm.box = settings["box"] ||= "laravel/homestead"
-        config.vm.box_version = settings["version"] ||= ">= 4.0.0"
+        config.vm.box_version = settings["version"] ||= ">= 6.0.0"
         config.vm.hostname = settings["hostname"] ||= "homestead"
 
         # Configure A Private Network IP
@@ -167,8 +167,10 @@ class Homestead
                     config.vm.synced_folder folder["map"], folder["to"], type: folder["type"] ||= nil, **options
 
                     # Bindfs support to fix shared folder (NFS) permission issue on Mac
-                    if Vagrant.has_plugin?("vagrant-bindfs")
-                        config.bindfs.bind_folder folder["to"], folder["to"]
+                    if (folder["type"] == "nfs")
+                        if Vagrant.has_plugin?("vagrant-bindfs")
+                            config.bindfs.bind_folder folder["to"], folder["to"]
+                        end
                     end
                 else
                     config.vm.provision "shell" do |s|
@@ -195,7 +197,12 @@ class Homestead
 
                 type = site["type"] ||= "laravel"
 
-                if (type == "symfony")
+                case type
+                when "apigility"
+                    type = "zf"
+                when "expressive"
+                    type = "zf"
+                when "symfony"
                     type = "symfony2"
                 end
 
@@ -209,7 +216,23 @@ class Homestead
                         params += " )"
                     end
                     s.path = scriptDir + "/serve-#{type}.sh"
-                    s.args = [site["map"], site["to"], site["port"] ||= "80", site["ssl"] ||= "443", site["php"] ||= "7.1", params ||= ""]
+                    s.args = [site["map"], site["to"], site["port"] ||= "80", site["ssl"] ||= "443", site["php"] ||= "7.2", params ||= "", site["zray"] ||= "false"]
+
+                    if site["zray"] == 'true'
+                        config.vm.provision "shell" do |s|
+                            s.inline = "ln -sf /opt/zray/gui/public " + site["to"] + "/ZendServer"
+                        end
+                        config.vm.provision "shell" do |s|
+                            s.inline = "ln -sf /opt/zray/lib/zray.so /usr/lib/php/20170718/zray.so"
+                        end
+                        config.vm.provision "shell" do |s|
+                            s.inline = "ln -sf /opt/zray/zray.ini /etc/php/7.2/fpm/conf.d/zray.ini"
+                        end
+                    else
+                        config.vm.provision "shell" do |s|
+                            s.inline = "rm -rf " + site["to"] + "/ZendServer"
+                        end
+                    end
                 end
 
                 # Configure The Cron Schedule
@@ -230,77 +253,6 @@ class Homestead
                         s.name = "Checking for old Schedule"
                         s.inline = "rm -f /etc/cron.d/$1"
                         s.args = [site["map"].tr('^A-Za-z0-9', '')]
-                    end
-                end
-            end
-        end
-
-        config.vm.provision "shell" do |s|
-            s.name = "Restarting Cron"
-            s.inline = "sudo service cron restart"
-        end
-
-        config.vm.provision "shell" do |s|
-            s.name = "Restarting Nginx"
-            s.inline = "sudo service nginx restart; sudo service php5.6-fpm restart; sudo service php7.0-fpm restart; sudo service php7.1-fpm restart; sudo service php7.2-fpm restart"
-        end
-
-        # Install MariaDB If Necessary
-        if settings.has_key?("mariadb") && settings["mariadb"]
-            config.vm.provision "shell" do |s|
-                s.path = scriptDir + "/install-maria.sh"
-            end
-        end
-
-        # Install MongoDB If Necessary
-        if settings.has_key?("mongodb") && settings["mongodb"]
-            config.vm.provision "shell" do |s|
-                s.path = scriptDir + "/install-mongo.sh"
-            end
-        end
-
-        # Install CouchDB If Necessary
-        if settings.has_key?("couchdb") && settings["couchdb"]
-            config.vm.provision "shell" do |s|
-                s.path = scriptDir + "/install-couch.sh"
-            end
-        end
-
-        # Install Elasticsearch If Necessary
-        if settings.has_key?("elasticsearch") && settings["elasticsearch"]
-            config.vm.provision "shell" do |s|
-                s.path = scriptDir + "/install-elasticsearch.sh"
-            end
-        end
-
-        # Configure All Of The Configured Databases
-        if settings.has_key?("databases")
-            settings["databases"].each do |db|
-                config.vm.provision "shell" do |s|
-                    s.name = "Creating MySQL Database: " + db
-                    s.path = scriptDir + "/create-mysql.sh"
-                    s.args = [db]
-                end
-
-                config.vm.provision "shell" do |s|
-                    s.name = "Creating Postgres Database: " + db
-                    s.path = scriptDir + "/create-postgres.sh"
-                    s.args = [db]
-                end
-
-                if settings.has_key?("mongodb") && settings["mongodb"]
-                    config.vm.provision "shell" do |s|
-                        s.name = "Creating Mongo Database: " + db
-                        s.path = scriptDir + "/create-mongo.sh"
-                        s.args = [db]
-                    end
-                end
-
-                if settings.has_key?("couchdb") && settings["couchdb"]
-                    config.vm.provision "shell" do |s|
-                        s.name = "Creating Couch Database: " + db
-                        s.path = scriptDir + "/create-couch.sh"
-                        s.args = [db]
                     end
                 end
             end
@@ -345,10 +297,132 @@ class Homestead
             end
         end
 
+        config.vm.provision "shell" do |s|
+            s.name = "Restarting Cron"
+            s.inline = "sudo service cron restart"
+        end
+
+        config.vm.provision "shell" do |s|
+            s.name = "Restarting Cron"
+            s.inline = "sudo service cron restart"
+        end
+
+        config.vm.provision "shell" do |s|
+            s.name = "Restarting Nginx"
+            s.inline = "sudo service nginx restart; sudo service php5.6-fpm restart; sudo service php7.0-fpm restart; sudo service php7.1-fpm restart; sudo service php7.2-fpm restart"
+        end
+
+        # Install CouchDB If Necessary
+        if settings.has_key?("couchdb") && settings["couchdb"]
+            config.vm.provision "shell" do |s|
+                s.path = scriptDir + "/install-couch.sh"
+            end
+        end
+
+        # Install Elasticsearch If Necessary
+        if settings.has_key?("elasticsearch") && settings["elasticsearch"]
+            config.vm.provision "shell" do |s|
+                s.name = "Installing Elasticsearch"
+                s.path = scriptDir + "/install-elasticsearch.sh"
+                s.args = settings["elasticsearch"]
+            end
+        end
+
+        # Install MariaDB If Necessary
+        if settings.has_key?("mariadb") && settings["mariadb"]
+            config.vm.provision "shell" do |s|
+                s.path = scriptDir + "/install-maria.sh"
+            end
+        end
+
+        # Install Minio If Necessary
+        if settings.has_key?("minio") && settings["minio"]
+            config.vm.provision "shell" do |s|
+                s.path = scriptDir + "/install-minio.sh"
+            end
+        end
+
+        # Install MongoDB If Necessary
+        if settings.has_key?("mongodb") && settings["mongodb"]
+            config.vm.provision "shell" do |s|
+                s.path = scriptDir + "/install-mongo.sh"
+            end
+        end
+
+        # Install Neo4j If Necessary
+        if settings.has_key?("neo4j") && settings["neo4j"]
+            config.vm.provision "shell" do |s|
+                s.path = scriptDir + "/install-neo4j.sh"
+            end
+        end
+
+        # Install InfluxDB if Necessary
+        if settings.has_key?("influxdb") && settings["influxdb"]
+            config.vm.provision "shell" do |s|
+                s.path = scriptDir + "/install-influxdb.sh"
+            end
+        end
+
+        # Configure All Of The Configured Databases
+        if settings.has_key?("databases")
+            settings["databases"].each do |db|
+                config.vm.provision "shell" do |s|
+                    s.name = "Creating MySQL Database: " + db
+                    s.path = scriptDir + "/create-mysql.sh"
+                    s.args = [db]
+                end
+
+                config.vm.provision "shell" do |s|
+                    s.name = "Creating Postgres Database: " + db
+                    s.path = scriptDir + "/create-postgres.sh"
+                    s.args = [db]
+                end
+
+                if settings.has_key?("mongodb") && settings["mongodb"]
+                    config.vm.provision "shell" do |s|
+                        s.name = "Creating Mongo Database: " + db
+                        s.path = scriptDir + "/create-mongo.sh"
+                        s.args = [db]
+                    end
+                end
+
+                if settings.has_key?("couchdb") && settings["couchdb"]
+                    config.vm.provision "shell" do |s|
+                        s.name = "Creating Couch Database: " + db
+                        s.path = scriptDir + "/create-couch.sh"
+                        s.args = [db]
+                    end
+                end
+
+                if settings.has_key?("influxdb") && settings["influxdb"]
+                    config.vm.provision "shell" do |s|
+                        s.name = "Creating InfluxDB Database: " + db
+                        s.path = scriptDir + "/create-influxdb.sh"
+                        s.args = [db]
+                    end
+                end
+
+            end
+        end
+
+        # Install grafana if Necessary
+        if settings.has_key?("grafana") && settings["grafana"]
+            config.vm.provision "shell" do |s|
+                s.path = scriptDir + "/install-grafana.sh"
+            end
+        end
+
+        # Install chronograf if Necessary
+        if settings.has_key?("chronograf") && settings["chronograf"]
+            config.vm.provision "shell" do |s|
+                s.path = scriptDir + "/install-chronograf.sh"
+            end
+        end
+
         # Update Composer On Every Provision
         config.vm.provision "shell" do |s|
             s.name = "Update Composer"
-            s.inline = "sudo /usr/local/bin/composer self-update && sudo chown -R vagrant:vagrant /home/vagrant/.composer/"
+            s.inline = "sudo /usr/local/bin/composer self-update --no-progress && sudo chown -R vagrant:vagrant /home/vagrant/.composer/"
             s.privileged = false
         end
 
@@ -370,6 +444,30 @@ class Homestead
             s.path = scriptDir + "/create-ngrok.sh"
             s.args = [settings["ip"]]
             s.privileged = false
+        end
+
+        if settings.has_key?("backup") && settings["backup"] && (Vagrant::VERSION >= '2.1.0' || Vagrant.has_plugin('vagrant-triggers'))
+            dirPrefix = '/vagrant/'
+            settings["databases"].each do |database|
+                Homestead.backupMysql(database, "#{dirPrefix}/mysql_backup", config)
+                Homestead.backupPostgres(database, "#{dirPrefix}/postgres_backup", config)
+            end
+        end
+    end
+
+    def Homestead.backupMysql(database, dir, config)
+        now = Time.now.strftime("%Y%m%d%H%M")
+        config.trigger.before :destroy do |trigger|
+            trigger.warn = "Backing up mysql database #{database}..."
+            trigger.run_remote = {"inline": "mkdir -p #{dir} && mysqldump #{database} > #{dir}/#{database}-#{now}.sql"}
+        end
+    end
+
+    def Homestead.backupPostgres(database, dir, config)
+        now = Time.now.strftime("%Y%m%d%H%M")
+        config.trigger.before :destroy do |trigger|
+            trigger.warn = "Backing up postgres database #{database}..."
+            trigger.run_remote = {"inline": "mkdir -p #{dir} && echo localhost:5432:#{database}:homestead:secret > ~/.pgpass && chmod 600 ~/.pgpass && pg_dump -U homestead -h localhost #{database} > #{dir}/#{database}-#{now}.sql"}
         end
     end
 end

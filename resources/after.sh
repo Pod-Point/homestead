@@ -69,7 +69,7 @@ displayServerInfo () {
 #
 displayTitle "Installing missing dependencies"
 
-apt-get -o Dpkg::Options::="--force-confnew" install -y php7.0-bz2 php7.0-mcrypt php7.0-gmp php7.0-xdebug php7.1-bz2 php7.1-mcrypt php7.1-gmp php7.1-xdebug
+apt-get -o Dpkg::Options::="--force-confnew" install -y php7.0-bz2 php7.0-mcrypt php7.0-gmp php7.0-xdebug php7.1-bz2 php7.1-mcrypt php7.1-gmp php7.1-xdebug php7.2-bz2 php7.2-mcrypt php7.2-gmp php7.2-xdebug
 
 displayOkMessage
 
