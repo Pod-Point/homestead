@@ -145,7 +145,7 @@ just run the following command from the folder where you cloned this repository:
 ./init.sh && homestead <up/reload> --provision && homestead ssh
 ```
 
-## Change Homestead default PHP version
+## Changing Homestead default PHP version
 
 Once homestead is up and running, run the following command into your ssh instance. This will change the default version of PHP and allow you to run artisan command without any issue.
 
