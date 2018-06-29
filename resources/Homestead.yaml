@@ -28,6 +28,9 @@ sites:
     # Auth Service
     - map: auth-service.test
       to: /home/vagrant/code/auth-service/public
+    # Commissioning Service
+    - map: commissioning-service.test
+      to: /home/vagrant/code/commissioning-service/public
     # Contractors Tool
     - map: contractors-tool.test
       to: /home/vagrant/code/contractors-tool/public
