@@ -20,6 +20,8 @@ Welcome to our custom Homestead development environment guide!
 
 * [Our Stack](./docs/OurStack.md)
 
+* [Upgrading Homestead](./docs/UpgradingHomestead.md)
+
 * [Reminder](./docs/Reminder.md)
 
 * [Troubleshooting](./docs/Troubleshooting.md)
