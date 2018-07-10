@@ -31,7 +31,12 @@ fi
 sed -i -e "s{codeRepositoryPath}$HOMESTEAD_WORKING_DIRg" files/Homestead.yaml
 sed -i -e "s{vendorPath}$HOMESTEAD_VENDOR_DIRg" files/Homestead.yaml
 
+# Support official Homestead tests
+cp -i resources/after.sh files/after.sh
+cp -i resources/aliases files/aliases
+cp -i resources/custom/* files/custom/
 
+# Our implementation
 cp -i resources/after.sh files/after.sh
 cp -i resources/aliases files/aliases
 cp -i resources/custom/* files/custom/

@@ -8,6 +8,7 @@ before_script:
   - phpenv config-rm xdebug.ini
   - composer config github-oauth.github.com ${COMPOSER_TOKEN}
   - composer install --no-interaction
+  - ./init.sh
 
 script:
   - vendor/bin/phpunit
