@@ -1,23 +1,16 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-#
-## Set global output colors
-#
-NC = "\033[0m"
-RED = "\033[0;31m"
-GREEN = "\033[0;32m"
-
 require 'json'
 require 'yaml'
 
 VAGRANTFILE_API_VERSION ||= "2"
 confDir = $confDir ||= File.expand_path(File.dirname(__FILE__))
 
-homesteadYamlPath = File.join(confDir, "files", "Homestead.yaml")
-homesteadJsonPath = File.join(confDir, "files", "Homestead.json")
-afterScriptPath = File.join(confDir, "files", "after.sh")
-aliasesPath = File.join(confDir, "files", "aliases")
+homesteadYamlPath = confDir + "/Homestead.yaml"
+homesteadJsonPath = confDir + "/Homestead.json"
+afterScriptPath = confDir + "/after.sh"
+aliasesPath = confDir + "/aliases"
 
 require File.expand_path(File.dirname(__FILE__) + '/scripts/homestead.rb')
 
@@ -42,7 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     Homestead.configure(config, settings)
 
     if File.exist? afterScriptPath then
-        config.vm.provision "shell", path: afterScriptPath, privileged: true, keep_color: true
+        config.vm.provision "shell", path: afterScriptPath, privileged: false, keep_color: true
     end
 
     if Vagrant.has_plugin?('vagrant-hostsupdater')
