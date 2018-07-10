@@ -17,7 +17,7 @@ folders:
     - map: "{vendorPath}"
       to: /home/vagrant/vendor
       type: "nfs"
-    - map: "{vendorPath}/../files/custom"
+    - map: "{vendorPath}/../files/config"
       to: /home/vagrant/config
       type: "nfs"
 

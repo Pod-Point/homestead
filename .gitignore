@@ -2,7 +2,8 @@
 ## Generated files
 #
 /.vagrant
-/files
+/files/*
+/homestead/files/config/*
 /vendor
 phpunit.xml
 /Homestead.yaml

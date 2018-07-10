@@ -5,13 +5,14 @@
 #
 
 if [[ -n "$1" ]]; then
-    cp -f resources/Homestead.json Homestead.json
+    cp resources/Homestead.json Homestead.json
 else
-    cp -f resources/Homestead.yaml Homestead.yaml
+    cp resources/Homestead.yaml Homestead.yaml
 fi
 
-cp -f resources/after.sh after.sh
-cp -f resources/aliases aliases
+cp resources/after.sh after.sh
+cp resources/aliases aliases
+
 
 #
 ## ---------------------
@@ -19,13 +20,14 @@ cp -f resources/aliases aliases
 ## ---------------------
 #
 
-find files/* -type f -not -name ".gitkeep" -exec rm -f {} \;
-
-if [[ -n "$1" ]]; then
-    cp -f resources/localized/Homestead.json files/Homestead.json
+if [ -d "files" ]; then
+    find files/* -type f -not -name ".gitkeep" -exec rm -f {} \;
 else
-    cp -f resources/localized/Homestead.yaml files/Homestead.yaml
+    mkdir files
 fi
+
+# Copy needed custom files
+cp -Rf resources/custom/* files/
 
 # Check and set needed environment variables for Homestead Working Directory's path
 if [[ -z "${HOMESTEAD_WORKING_DIR}" ]]; then
@@ -44,10 +46,5 @@ fi
 # Replace paths in Homestead config
 sed -i "" -e "s{codeRepositoryPath}$HOMESTEAD_WORKING_DIRg" files/Homestead.yaml
 sed -i "" -e "s{vendorPath}$HOMESTEAD_VENDOR_DIRg" files/Homestead.yaml
-
-# Copy needed files
-cp -f resources/after.sh files/after.sh
-cp -f resources/aliases files/aliases
-cp -f resources/custom/* files/custom/
 
 echo "Homestead initialized!"
