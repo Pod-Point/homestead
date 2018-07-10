@@ -3,9 +3,17 @@
 find files/* -type f -not -name ".gitkeep" -exec rm -f {} \;
 
 if [[ -n "$1" ]]; then
-    cp -i resources/Homestead.json files/Homestead.json
+    # Support official Homestead tests
+    cp -rfi resources/Homestead.json ./Homestead.json
+
+    # Our implementation
+    cp -rfi resources/Homestead.json files/Homestead.json
 else
-    cp -i resources/Homestead.yaml files/Homestead.yaml
+    # Support official Homestead tests
+    cp -rfi resources/Homestead.yaml ./Homestead.yaml
+
+    # Our implementation
+    cp -rfi resources/Homestead.yaml files/Homestead.yaml
 fi
 
 #
@@ -25,20 +33,28 @@ if [[ -z "${HOMESTEAD_VENDOR_DIR}" ]]; then
 fi
 
 #
-## Replace paths in Homestead config
+## Support official Homestead tests
 #
 
-sed -i -e "s{codeRepositoryPath}$HOMESTEAD_WORKING_DIRg" files/Homestead.yaml
-sed -i -e "s{vendorPath}$HOMESTEAD_VENDOR_DIRg" files/Homestead.yaml
+# Replace paths in Homestead config
+sed -i "" -e "s{codeRepositoryPath}$HOMESTEAD_WORKING_DIRg" ./Homestead.yaml
+sed -i "" -e "s{vendorPath}$HOMESTEAD_VENDOR_DIRg" ./Homestead.yaml
 
-# Support official Homestead tests
-cp -i resources/after.sh files/after.sh
-cp -i resources/aliases files/aliases
-cp -i resources/custom/* files/custom/
+# Copy needed files
+cp -rfi resources/after.sh ./after.sh
+cp -rfi resources/aliases ./aliases
 
-# Our implementation
-cp -i resources/after.sh files/after.sh
-cp -i resources/aliases files/aliases
-cp -i resources/custom/* files/custom/
+#
+## Our implementation
+#
+
+# Replace paths in Homestead config
+sed -i "" -e "s{codeRepositoryPath}$HOMESTEAD_WORKING_DIRg" files/Homestead.yaml
+sed -i "" -e "s{vendorPath}$HOMESTEAD_VENDOR_DIRg" files/Homestead.yaml
+
+# Copy needed files
+cp -rfi resources/after.sh files/after.sh
+cp -rfi resources/aliases files/aliases
+cp -rfi resources/custom/* files/custom/
 
 echo "Homestead initialized!"
