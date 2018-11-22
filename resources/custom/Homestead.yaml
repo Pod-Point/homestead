@@ -27,6 +27,11 @@ sites:
       to: /home/vagrant/code/api3/public
       php: "7.1"
 
+    # API 5
+    - map: api5.test
+      to: /home/vagrant/code/api5/public
+      php: "7.1"
+
     # Auth Service
     - map: auth-service.test
       to: /home/vagrant/code/auth-service/public
@@ -47,18 +52,13 @@ sites:
       to: /home/vagrant/code/dealerships-tool/public
       php: "7.1"
 
-    # Installs Reporting
-    - map: installs-reporting.test
-      to: /home/vagrant/code/installs-reporting/public
-      php: "7.1"
-
     # Install tools - Ordering tools
     - map: installs-tool.test
       to: /home/vagrant/code/installs-tool/public
       php: "7.1"
 
     # Install tools - Renault
-    - map: installs-tool-renault.test
+    - map: renault.test
       to: /home/vagrant/code/renault/public
       php: "7.1"
 
@@ -79,11 +79,6 @@ sites:
 
     # POD Point - Web
     - map: pod-point.test
-      to: /home/vagrant/code/pod-point.com/public
-      php: "7.1"
-
-    # POD Point - Web Craft CMS
-    - map: craft.test
       to: /home/vagrant/code/pod-point.com/public
       php: "7.1"
 
