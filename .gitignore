@@ -2,6 +2,14 @@
 ## Generated files
 #
 /.vagrant
-/files
+/files/*
+/homestead/files/config/*
 /vendor
 phpunit.xml
+/Homestead.yaml
+/Homestead.json
+/after.sh
+/aliases
+/mysqldump.sql.gz
+/mysql_backup
+/postgres_backup

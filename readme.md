@@ -20,6 +20,8 @@ Welcome to our custom Homestead development environment guide!
 
 * [Our Stack](./docs/OurStack.md)
 
+* [Upgrading Homestead](./docs/UpgradingHomestead.md)
+
 * [Reminder](./docs/Reminder.md)
 
 * [Troubleshooting](./docs/Troubleshooting.md)
@@ -29,6 +31,6 @@ Welcome to our custom Homestead development environment guide!
 # Learn more about Homestead
 Find out more about the Official Homestead (from which our stack inherit)
 
-=======
+Homestead runs on any Windows, Mac, or Linux system, and includes the Nginx web server, PHP 7.2, MySQL, Postgres, Redis, Memcached, Node, and all of the other goodies you need to develop amazing Laravel applications.
 
 Official documentation [is located here](https://laravel.com/docs/homestead).

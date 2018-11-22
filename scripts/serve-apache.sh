@@ -29,10 +29,10 @@ block="<VirtualHost *:$3>
     ServerAdmin webmaster@localhost
     ServerName $1
     ServerAlias www.$1
-    DocumentRoot $2
+    DocumentRoot "$2"
     $paramsTXT
 
-    <Directory $2>
+    <Directory "$2">
         AllowOverride All
         Require all granted
     </Directory>
@@ -66,10 +66,10 @@ blockssl="<IfModule mod_ssl.c>
         ServerAdmin webmaster@localhost
         ServerName $1
         ServerAlias www.$1
-        DocumentRoot $2
+        DocumentRoot "$2"
         $paramsTXT
 
-        <Directory $2>
+        <Directory "$2">
             AllowOverride All
             Require all granted
         </Directory>
@@ -168,6 +168,15 @@ sudo a2enmod rewrite
 
 # Turn on HTTPS support
 sudo a2enmod ssl
+
+# Turn on headers support
+sudo a2enmod headers
+
+# Add Mutex to config to prevent auto restart issues
+if [ -z "$(grep '^Mutex posixsem$' /etc/apache2/apache2.conf)" ]
+then
+    echo 'Mutex posixsem' | sudo tee -a /etc/apache2/apache2.conf
+fi
 
 service apache2 restart
 
