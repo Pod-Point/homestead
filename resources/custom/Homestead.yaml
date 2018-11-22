@@ -52,12 +52,12 @@ sites:
       to: /home/vagrant/code/dealerships-tool/public
       php: "7.1"
 
-    # Install tools - Ordering tools
+    # Installs tools - Ordering tools
     - map: installs-tool.test
       to: /home/vagrant/code/installs-tool/public
       php: "7.1"
 
-    # Install tools - Renault
+    # Renault
     - map: renault.test
       to: /home/vagrant/code/renault/public
       php: "7.1"
