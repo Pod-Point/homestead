@@ -14,10 +14,11 @@ require 'yaml'
 VAGRANTFILE_API_VERSION ||= "2"
 confDir = $confDir ||= File.expand_path(File.dirname(__FILE__))
 
-homesteadYamlPath = File.join(confDir, "files", "Homestead.yaml")
-homesteadJsonPath = File.join(confDir, "files", "Homestead.json")
-afterScriptPath = File.join(confDir, "files", "after.sh")
-aliasesPath = File.join(confDir, "files", "aliases")
+homesteadYamlPath = File.join(confDir, "/files", "Homestead.yaml")
+homesteadJsonPath = File.join(confDir, "/files", "Homestead.json")
+afterScriptPath = File.join(confDir, "/files", "after.sh")
+aliasesPath = File.join(confDir, "/files", "aliases")
+customizationScriptPath = confDir + "/user-customizations.sh"
 
 require File.expand_path(File.dirname(__FILE__) + '/scripts/homestead.rb')
 
