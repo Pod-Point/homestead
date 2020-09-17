@@ -1,16 +1,13 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-homestead.svg"></p>
+# [DEPRECATED] POD Point Homestead guide
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/homestead"><img src="https://travis-ci.org/laravel/homestead.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/homestead"><img src="https://poser.pugx.org/laravel/homestead/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/homestead"><img src="https://poser.pugx.org/laravel/homestead/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/homestead"><img src="https://poser.pugx.org/laravel/homestead/license.svg" alt="License"></a>
-</p>
-
-# POD Point Homestead guide
 Welcome to our custom Homestead development environment guide!
 
-***
+---
+
+⚠️ **This repository is deprecated, we recommend you to use the plain vanilla [Laravel Homestead](https://laravel.com/docs/master/homestead).**
+If you want to extend Homestead capabilities, please refer to the [dedicated documentation](https://laravel.com/docs/master/homestead#extending-homestead).
+
+---
 
 **Table of Content**
 
